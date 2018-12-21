@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    include:
+    - native
+  cloud:
+    config:
+      server:
+        # you can set using github repo like below
+        #git:
+        #  uri: https://github.com/ohdoking/microservices-config-repo
+        native:
+          search-locations:
+          - classpath:/config-repo
+
+          
+          

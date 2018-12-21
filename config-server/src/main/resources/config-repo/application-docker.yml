@@ -1,0 +1,11 @@
+# Eureka
+eureka:
+ client:
+  serviceUrl:
+   defaultZone:http://service-registry:8761/eureka/
+
+# RabbitMQ
+spring:
+ rabbitmq:
+  host: rabbitmq
+  addresses: rabbitmq:5672

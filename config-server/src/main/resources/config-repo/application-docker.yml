@@ -2,10 +2,18 @@
 eureka:
  client:
   serviceUrl:
-   defaultZone:http://service-registry:8761/eureka/
+   defaultZone: http://service-registry:8761/eureka/
+  enabled: true
+ instance:
+  preferIpAddress: true
+
 
 # RabbitMQ
 spring:
  rabbitmq:
   host: rabbitmq
   addresses: rabbitmq:5672
+ cloud:
+  config:
+   uri: http://config-server:8888
+  

@@ -1,0 +1,26 @@
+test:
+ hello: "ohdoking hello"
+ 
+server:
+  port: 8081
+
+endpoints:
+  refresh:
+    enabled: true
+
+management:
+  #security:
+  # enabled: false
+  endpoints:
+   web:
+    exposure:
+     include: "*"
+
+eureka:
+ client:
+  serviceUrl:
+   defaultZone: http://localhost:8761/eureka/
+  enabled: true
+ instance:
+  preferIpAddress: true
+  

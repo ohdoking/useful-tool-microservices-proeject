@@ -7,10 +7,10 @@
 #### Elastic search concept 
 
 * Data Flow in Elastic search 
-![GitHub Logo](https://byungjun0689.github.io/src/201708/basic/concept/1.png)
+	![GitHub Logo](https://byungjun0689.github.io/src/201708/basic/concept/1.png)
 
-* Elasticsearch Structure
-![GitHub Logo](https://byungjun0689.github.io/src/201708/basic/concept/3.png)
+* Elastic search Structure
+	![GitHub Logo](https://byungjun0689.github.io/src/201708/basic/concept/3.png)
 
 #### Elastic search vs Relation DB
 
@@ -22,8 +22,8 @@
 #### CRUD using elastic search
 
 * Get Index in elastic search
-- curl -XGET http://localhost:9200/[index name]
-- curl -XGET http://localhost:9200/[index name]?pretty 
+	- curl -XGET http://localhost:9200/[index name]
+	- curl -XGET http://localhost:9200/[index name]?pretty 
 ```
 //no index situation.
 {
@@ -49,7 +49,7 @@
 }
 ```
 * Create Index
-- curl -XPUT http://localhost:9200/[index name]
+	- curl -XPUT http://localhost:9200/[index name]
 ```
 {
 	"acknowledged":true,
@@ -80,7 +80,7 @@
 ```
 
 * Delete index
-- curl -XDELETE http://localhost:9200/[index name]
+	- curl -XDELETE http://localhost:9200/[index name]
 ```
 {
   "acknowledged" : true
@@ -88,7 +88,7 @@
 ```
 
 * Create Document
-- curl -XPOST http://localhost:9200/classes/class/2/?pretty -d '{"title" : "algorithm","professor" : "John"}'
+	- curl -XPOST http://localhost:9200/classes/class/2/?pretty -d '{"title" : "algorithm","professor" : "John"}'
 ```
 {
   "_index" : "classes",
@@ -105,10 +105,10 @@
 }
 ```
 
-- curl -XPOST http://localhost:9200/classes/class/1/?pretty -d @oneclass.json(you can use file too)
+	- curl -XPOST http://localhost:9200/classes/class/1/?pretty -d @oneclass.json(you can use file too)
 
 * Update Document
-- curl -XPOST http://localhost:9200/classes/class/2/?pretty -d '{"title" : "algorithm","professor" : "John1"}'
+	- curl -XPOST http://localhost:9200/classes/class/2/?pretty -d '{"title" : "algorithm","professor" : "John1"}'
 {
   "_index" : "classes",
   "_type" : "class",
@@ -125,7 +125,7 @@
 
 * Update Document like programmatically
 
-- curl -XPOST http://localhost:9200/classes/class/3/?pretty -d '{"add":1}'
+	- curl -XPOST http://localhost:9200/classes/class/3/?pretty -d '{"add":1}'
 ```
 //result
 {
@@ -139,7 +139,7 @@
   }
 }
 ```
-- curl -XPOST http://localhost:9200/classes/class/3/_update?pretty -d '{"script" : "ctx._source.add += 5"}'
+	- curl -XPOST http://localhost:9200/classes/class/3/_update?pretty -d '{"script" : "ctx._source.add += 5"}'
 ```
 //result
 {
@@ -159,6 +159,9 @@
 
 * 
 
+
+## Reference
+- https://byungjun0689.github.io/1.Elasticsearch/
 
 
 

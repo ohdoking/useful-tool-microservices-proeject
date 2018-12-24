@@ -104,7 +104,6 @@
   "created" : false
 }
 ```
-
 	- curl -XPOST http://localhost:9200/classes/class/1/?pretty -d @oneclass.json(you can use file too)
 
 * Update Document
@@ -155,7 +154,7 @@
 ```
 
 * Create bulk file
-- curl -XPOST http://localhost:9200/_bulk?pretty - -data-binary @classes.json
+	- curl -XPOST http://localhost:9200/_bulk?pretty - -data-binary @classes.json
 
 * 
 

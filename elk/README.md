@@ -108,6 +108,7 @@
 
 * Update Document
 	- curl -XPOST http://localhost:9200/classes/class/2/?pretty -d '{"title" : "algorithm","professor" : "John1"}'
+```	
 {
   "_index" : "classes",
   "_type" : "class",
@@ -121,10 +122,10 @@
   },
   "created" : false
 }
-
+```
 * Update Document like programmatically
-
 	- curl -XPOST http://localhost:9200/classes/class/3/?pretty -d '{"add":1}'
+	
 ```
 //result
 {
@@ -138,7 +139,9 @@
   }
 }
 ```
+
 	- curl -XPOST http://localhost:9200/classes/class/3/_update?pretty -d '{"script" : "ctx._source.add += 5"}'
+	
 ```
 //result
 {
@@ -237,6 +240,7 @@
 	- curl -XGET 'localhost:9200/basketball/record/_search?q=points:30&pretty'
 	- curl -XGET localhost:9200/basketball/record/_search?pretty -d '{"query":{"term":{"points":20}}}'
 	
+#### Aggregations elastic search
 
 ## Reference
 - https://byungjun0689.github.io/1.Elasticsearch/

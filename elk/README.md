@@ -156,8 +156,87 @@
 * Create bulk file
 	- curl -XPOST http://localhost:9200/_bulk?pretty - -data-binary @classes.json
 
-* 
+* Create Mapping
+	- curl -XPUT http://localhost:9200/classes/class/_mapping -d @classesRating_maping.json
+```
+//before
+{
+  "classes" : {
+    "aliases" : { },
+    "mappings" : { },
+    "settings" : {
+      "index" : {
+        "creation_date" : "1545694104056",
+        "number_of_shards" : "5",
+        "number_of_replicas" : "1",
+        "uuid" : "e4UAqKMlQvWruhKiN0MLUA",
+        "version" : {
+          "created" : "5061499"
+        },
+        "provided_name" : "classes"
+      }
+    }
+  }
+}
+//after
+{
+  "classes" : {
+    "aliases" : { },
+    "mappings" : {
+      "class" : {
+        "properties" : {
+          "major" : {
+            "type" : "text"
+          },
+          "professor" : {
+            "type" : "text"
+          },
+          "rating" : {
+            "type" : "integer"
+          },
+          "school_location" : {
+            "type" : "geo_point"
+          },
+          "semester" : {
+            "type" : "text"
+          },
+          "student_count" : {
+            "type" : "integer"
+          },
+          "submit_date" : {
+            "type" : "date",
+            "format" : "yyyy-MM-dd"
+          },
+          "title" : {
+            "type" : "text"
+          },
+          "unit" : {
+            "type" : "integer"
+          }
+        }
+      }
+    },
+    "settings" : {
+      "index" : {
+        "creation_date" : "1545694104056",
+        "number_of_shards" : "5",
+        "number_of_replicas" : "1",
+        "uuid" : "e4UAqKMlQvWruhKiN0MLUA",
+        "version" : {
+          "created" : "5061499"
+        },
+        "provided_name" : "classes"
+      }
+    }
+  }
+}
+```
 
+* Search in document
+	- curl -XGET localhost:9200/basketball/record/_search?pretty
+	- curl -XGET 'localhost:9200/basketball/record/_search?q=points:30&pretty'
+	- curl -XGET localhost:9200/basketball/record/_search?pretty -d '{"query":{"term":{"points":20}}}'
+	
 
 ## Reference
 - https://byungjun0689.github.io/1.Elasticsearch/

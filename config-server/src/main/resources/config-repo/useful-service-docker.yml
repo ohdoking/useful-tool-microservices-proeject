@@ -1,0 +1,61 @@
+# ----------------------------------------
+# Application Config
+# ----------------------------------------
+server:
+ servlet:
+  context-path: /api/v1/useful
+   
+---
+# ----------------------------------------
+# EUREKA PROPERTIES
+# ----------------------------------------
+eureka:
+ client:
+  serviceUrl:
+   defaultZone: http://service-registry:8761/eureka/
+  enabled: true
+ instance:
+  preferIpAddress: true
+  
+--- 
+# ----------------------------------------
+# REST PROPERTIES
+# ----------------------------------------
+spring:
+ data:
+  rest:
+   basePath: /useful
+   defaultPageSize: 10
+   maxPageSize: 100
+
+---
+# ----------------------------------------
+# DB PROPERTIES
+# ----------------------------------------
+spring:
+ datasource:
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://mysqldb:3306/useful_db
+  username: root
+  password: admin
+
+---
+# ----------------------------------------
+# JPA PROPERTIES
+# ----------------------------------------
+spring:
+ jpa:
+  hibernate:
+   ddlAuto: update
+   naming:
+    physicalStrategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  generate-ddl: true
+  show-sql: true
+  database: mysql
+  database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  properties:
+   hibernate:
+    format_sql: true
+    enableLazyLoadNoTrans: true
+    id:
+     newGeneratorMappings: false

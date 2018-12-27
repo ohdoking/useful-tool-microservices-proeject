@@ -1,0 +1,12 @@
+server:
+ port: 8901
+ 
+eureka:
+ client:
+  serviceUrl:
+   defaultZone: http://service-registry:8761/eureka/
+  enabled: true
+ instance:
+  preferIpAddress: true
+    
+redirect-uri: http://localhost:8080/ui

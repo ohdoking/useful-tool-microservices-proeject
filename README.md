@@ -54,26 +54,34 @@ Ex: `useful-tool-microservices-project> docker-compose up -d catalog-service --b
     * hostname: useful-service
     * Ports: 8082:8082
     * URL: http://localhost:8082/
-    
+
+* api-gateway-server:
+    * hostname: api-gateway-server
+    * Ports: 8080:8080
+    * URL: http://localhost:8080/
     
 ## Docker image explain
 
-* Vault 
-Vault is a tool for securely accessing secrets via a unified interface and tight access control.
+* Vault: 
+	Vault is a tool for securely accessing secrets via a unified interface and tight access control.
 
-* RabbitMQ
-RabbitMQ is an open source multi-protocol messaging broker.
+* RabbitMQ:
+	RabbitMQ is an open source multi-protocol messaging broker.
 
-* MySQL
-MySQL is a widely used, open-source relational database management system (RDBMS).
+* MySQL:
+	MySQL is a widely used, open-source relational database management system (RDBMS).
 
-## reference
+* Zuul:
+	Zuul NetflixOSS container image 
+## Reference
 - http://blog.leekyoungil.com/?p=352#comments
 - https://coe.gitbook.io/guide/service-discovery/eureka
 - http://www.littlebigextra.com/use-spring-profiles-docker-containers/
 - https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-profile-specific-properties
 - https://books.sonatype.com/mvnex-book/reference/multimodule.html
-
+- https://spring.io/guides/gs/multi-module/
+- https://cloud.spring.io/spring-cloud-netflix/multi/multi__router_and_filter_zuul.html
+- https://sanghaklee.gitbooks.io/elk/content/
 
 
 

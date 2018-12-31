@@ -1,0 +1,125 @@
+version: '3'
+services:
+  mysqldb:
+    image: mysql:5.7
+    container_name: mysqldb
+    ports:
+      - "3306:3306"
+    environment:
+     MYSQL_ROOT_PASSWORD: admin
+     MYSQL_DATABASE: useful_db
+
+  elasticsearch:
+    build: elk/elasticsearch/
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    image: blacktop/elasticsearch:x-pack
+    environment:
+      - "ELASTIC_PASSWORD=1234"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "xpack.security.audit.enabled=true"
+      - "iscovery.type=single-node"
+      
+      
+  logstash:
+    build: elk/logstash/
+    container_name: logstash
+    command: -f /etc/logstash/conf.d/
+    volumes:
+      - ./elk/logstash/config:/etc/logstash/conf.d
+      - /Users/ohdoking/DevOh/Workspace/testWorkspace/elk/BigData/ch06/:/etc/logstash/data
+    ports:
+      - "9999:9999"
+    links:
+      - elasticsearch
+
+  kibana:
+    build: elk/kibana/
+    container_name: kibana
+    volumes:
+      - ./elk/kibana/config/:/opt/kibana/config/
+    ports:
+      - "5601:5601"
+    links:
+      - elasticsearch
+  
+  filebeat:
+    hostname: filebeat
+    # ** Here to build the image, you need to specify your own docker hub account :
+    image: bcoste/filebeat:latest
+    build:
+      context: ./elk/filebeat/
+    #Deploy is needed if you want to deploy in a Swarm
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+    volumes:
+    # needed to persist filebeat tracking data :
+     - "filebeat_data:/usr/share/filebeat/data:rw"
+    # needed to access all docker logs (read only) :
+     - "/var/lib/docker/containers:/usr/share/dockerlogs/data:ro"
+    # needed to access additional informations about containers
+     - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - logstash
+      
+  config-server:
+    container_name: config-server
+    build: ./config-server
+    ports:
+      - "8888:8888"
+      - "18787:8787"  
+    
+  service-registry:
+    container_name: service-registry
+    build: ./service-registry
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    entrypoint: /bin/sh
+    command: >
+      -c "
+      while ! (nc -z config-server 8888 ); do sleep 5; echo 'Waiting for vault and config-server services to start-up...'; done;
+      java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8787,suspend=n -jar -Dspring.profiles.active=docker /app.jar
+      "
+      
+  api-gateway-server:
+    container_name: api-gateway-server
+    build: ./api-gateway-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - config-server
+      - service-registry
+    entrypoint: /bin/sh
+    command: >
+      -c "
+      while ! (nc -z config-server 8888 && nc -z service-registry 8761); do sleep 5; echo 'Waiting for vault and config-server services to start-up...'; done;
+      java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8787,suspend=n -jar -Dspring.profiles.active=docker /app.jar
+      "
+      
+  useful-service:
+    container_name: useful-service
+    build: ./useful-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - config-server
+      - service-registry
+      - mysqldb
+      - logstash
+    entrypoint: /bin/sh
+    command: >
+      -c "
+      while ! (nc -z config-server 8888 && nc -z service-registry 8761); do sleep 5; echo 'Waiting for vault and config-server and service-registry services to start-up...'; done;
+      java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8787,suspend=n -jar -Dspring.profiles.active=docker /app.jar
+      "
+      
+volumes:
+# create a persistent volume for Filebeat
+  filebeat_data:
+  

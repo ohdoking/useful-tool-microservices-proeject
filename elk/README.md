@@ -125,9 +125,10 @@
 ```
 * Update Document like programmatically
 	- curl -XPOST http://localhost:9200/classes/class/3/?pretty -d '{"add":1}'
+	- curl -XPOST http://localhost:9200/classes/class/3/_update?pretty -d '{"script" : "ctx._source.add += 5"}'
 	
 ```
-//result
+//add 1
 {
   "_index" : "classes",
   "_type" : "class",
@@ -138,12 +139,7 @@
     "add" : 1
   }
 }
-```
-
-	- curl -XPOST http://localhost:9200/classes/class/3/_update?pretty -d '{"script" : "ctx._source.add += 5"}'
-	
-```
-//result
+//after adding programmatically
 {
   "_index" : "classes",
   "_type" : "class",
